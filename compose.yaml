@@ -1,0 +1,23 @@
+version: '3'
+services:
+  postgres_spring_mvc_object_mapper:
+    container_name: postgres_spring_mvc_object_mapper
+    image: postgres
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: spring_mvc_object_mapper
+    ports:
+      - "5432:5432"
+  spring_mvc_object_mapper:
+    build: ./
+    container_name: spring_mvc_object_mapper
+    image: spring_mvc_object_mapper
+    depends_on:
+      - postgres_spring_mvc_object_mapper
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_spring_mvc_object_mapper:5432/spring_mvc_object_mapper
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: user
+    ports:
+      - "8080:8080"
